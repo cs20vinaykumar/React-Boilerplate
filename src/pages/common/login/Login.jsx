@@ -1,49 +1,80 @@
 import React, { useState } from "react";
-import { data, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { create } from "../../../services/services";
-import { login } from "../../../services/apiEndpoints";
-import Input from "../../../components/Input";
+import { loginApi } from "../../../services/apiEndpoints";
+import Swal from "sweetalert2";
+import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
-
   const [emailAddress, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const loginUser = async () => {
-    await create(login, { emailAddress: emailAddress, password: password })
-      .then((data) => {
-        console.log("data", data);
-        localStorage.setItem("token", data.data.authToken);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log("data", error);
+    if (!emailAddress || !password) {
+      Swal.fire({
+        title: "Validation Error",
+        text: "Email and Password are required!",
+        icon: "warning",
+        showConfirmButton: true,
       });
+      return; // Stop execution if fields are empty
+    }
+    try {
+      const response = await create(loginApi, { emailAddress, password });
+
+      if (response?.success && response?.data?.authToken) {
+        localStorage.setItem("token", response.data.authToken);
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+
+      Swal.fire({
+        title: "Login Failed",
+        text: error.message || "Invalid credentials, please try again.",
+        icon: "error",
+        showConfirmButton: true,
+      });
+    }
   };
+
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="login-container">
+      <div className="login-card">
+        <h1>Welcome Back!</h1>
+        <input
+          type="email"
+          value={emailAddress}
+          className="input-field"
+          placeholder="Enter your email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          value={password}
+          className="input-field"
+          placeholder="Enter your password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button className="login-button" onClick={loginUser}>
+          Login
+        </button>
 
-      <Input
-        type="email"
-        value={emailAddress}
-        placeholder="Email"
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-      />
-
-      <Input
-        type="password"
-        value={password}
-        placeholder="Password"
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
-
-      <button onClick={loginUser}>Login</button>
+        <p className="signup-text">
+          {" "}
+          Don't have an account?{" "}
+          <button className="signup-btn" onClick={() => navigate("/register")}>
+            Sign Up
+          </button>
+        </p>
+        <button
+          className="forgot-button"
+          onClick={() => navigate("/forgot-password")}
+        >
+          Forgot Password?
+        </button>
+      </div>
     </div>
   );
 };

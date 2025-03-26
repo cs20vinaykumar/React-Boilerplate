@@ -1,12 +1,37 @@
-# React + Vite
+# React Boilerplate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project serves as a boilerplate for building React applications. It provides a structured folder layout and pre-configured settings to streamline development.
 
-Currently, two official plugins are available:
+## Folder Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```
+/e:/OFFICE/React-Boilerplate/
+├── public/          # Static files like index.html, images, etc.
+├── src/             # Main source code for the application
+│   ├── components/  # Reusable React components
+│   ├── pages/       # Page-level components
+│   ├── assets/      # Static assets like images, fonts, etc.
+│   ├── styles/      # Global and component-specific styles
+│   ├── utils/       # Utility functions and helpers
+│   ├── hooks/       # Custom React hooks
+│   ├── context/     # Context API setup for state management
+│   ├── services/    # API calls and external services
+│   └── App.js       # Main application component
+├── .gitignore       # Files and directories to ignore in Git
+├── package.json     # Project dependencies and scripts
+├── README.md        # Project documentation
+└── ...              # Other configuration files
+```
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Pre-configured React setup
+- Organized folder structure
+- Ready-to-use components and utilities
+- Easy scalability for larger projects
+
+## Getting Started
+
+1. Clone the repository.
+2. Run `npm install` to install dependencies.
+3. Use `npm start dev` to launch the development server.
